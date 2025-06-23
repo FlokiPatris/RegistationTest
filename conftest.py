@@ -1,11 +1,12 @@
+from playwright.sync_api import sync_playwright, ViewportSize
 import pytest
-from playwright.sync_api import sync_playwright
 
-@pytest.fixture(scope="function")
+@pytest.fixture(scope="session")
 def page():
     with sync_playwright() as p:
-        browser = p.chromium.launch()
-        context = browser.new_context()
+        browser = p.chromium.launch(headless=False)
+        viewport: ViewportSize = {"width": 1920, "height": 1080}
+        context = browser.new_context(viewport=viewport)
         page = context.new_page()
 
         yield page
