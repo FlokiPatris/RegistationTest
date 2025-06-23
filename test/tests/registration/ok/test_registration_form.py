@@ -1,5 +1,5 @@
-import pytest
 from test.pages.registration import RegistrationPage
+import pytest
 
 @pytest.fixture(scope="module")
 def reg_page(page):
