@@ -1,64 +1,85 @@
-from playwright.sync_api import Page, TimeoutError
-from constants.registration import REGISTRATION_URL
+# from playwright.sync_api import Page, TimeoutError
+from constants.selectors.registration import SUBMIT_BUTTON
+from constants.urls.registration import REGISTRATION_URL
+from helpers.utils import is_date_ddmmyyyy
 
+FIELD_MAPPING = {
+    "title_code": ("#titleCode", "string"),
+    "first_name": ("#firstName", "string"),
+    "last_name": ("#lastName", "string"),
+    "date_of_birth": ("[data-gtm-form-interact-field-id='dateOfBirth']", "date"),
+    "email": ("#email", "string"),
+    "postal_code": ("#postalCode", "number"),
+    "city": ("#city", "string"),
+    "street": ("#street", "string"),
+    "house_number": ("#houseNumber", "number"),
+    "address": ("#address", "string"),
+    "password": ("#password", "string"),
+    "password_repeat": ("#passwordRepeat", "string"),
+}
 
 class RegistrationPage:
-    #TODO - add getters for the elements and add corresponding name to getters. Here are the IDs of the form fields.
-    #TODO : titleCode (form field),firstName (form field), lastName  (form field), data-gtm-form-interact-field-id  (form field date of birth), (form field),, email (form field),, postalCode (form field),, city (form field),, street (form field),,houseNumber (form field),, Address (form field),, password (form field),, passwordRepeat (form field),, CZ_MARKETING_CONSENT (marking off), CZ_REGISTRATION_CONSENT (marking off), submit ( save button_)
-    def __init__(self, page: Page):
+    def __init__(self, page):
         self.page = page
         self.url = REGISTRATION_URL
 
     def navigate(self):
-        """
-        Navigates to the registration page and waits for the registration form to load.
-        """
         self.page.goto(self.url)
-        try:
-            self.page.wait_for_selector("form", timeout=5000)
-        except TimeoutError:
-            raise Exception("Registration form did not load within 5 seconds.")
+        self.wait_until_loaded()
+
+    def wait_until_loaded(self):
+        self.page.wait_for_selector("form#account-create, form", timeout=5000)
 
     def _fill_input(self, selector: str, value: str):
-        """
-        Helper method to wait for and fill an input field. Ensures the element is present.
-        """
-        try:
-            element = self.page.wait_for_selector(selector, timeout=5000)
-            element.fill(value)
-        except TimeoutError:
-            raise Exception(f"Element with selector '{selector}' not found on page.")
+        element = self.page.wait_for_selector(selector, timeout=5000)
+        element.fill(value)
 
-    def fill_field(self, selector: str, value, field_type: str):
-        """
-        Fills an input field based on the field's type.
-
-        Parameters:
-          selector (str): CSS selector for the target field.
-          value (str|int): The value to be input. Expected type depends on field_type.
-          field_type (str): Type of the field ('string', 'date', 'number').
-        """
+    def validate_and_fill_field(self, selector: str, value, field_type: str):
         if field_type == "string":
             if not isinstance(value, str):
-                raise ValueError(f"Expected a string for field '{selector}', got {type(value)}.")
-            self._fill_input(selector, value)
-
+                raise ValueError(f"Expected a string for {selector}, got {type(value)}.")
         elif field_type == "date":
-            # TODO - add a simple method isDateInMMDDYYYY into utils.py that checks the date format. Remove this.
-            if not (isinstance(value, str) and len(value) == 10):
-                raise ValueError(f"Date value '{value}' must be a string in 'YYYY-MM-DD' format.")
-            self._fill_input(selector, value)
-
+            if not is_date_ddmmyyyy(value):
+                raise ValueError("Date must be in 'DD-MM-YYYY' format.")
         elif field_type == "number":
             try:
-                number_str = str(int(value))
+                value = str(int(value))
             except (ValueError, TypeError):
-                raise ValueError(f"Invalid number value provided for field '{selector}'.")
-            self._fill_input(selector, number_str)
-
+                raise ValueError(f"Expected a number for {selector}, got {value}.")
         else:
-            raise ValueError(f"Unsupported field type: '{field_type}'.")
+            raise ValueError("Unsupported field type.")
 
-        #TODO Add a method fillForm
-        #TODO In this method all the form fields are going to be populated with values. We are expecting an list of values we want to populate in the form. The leght of the list has to equal the total number of fields. If not throww error.
+        self._fill_input(selector, value)
 
+    def fill_form_field(self, field_key: str, value):
+        """
+        Generic function to fill any registration form field by its key.
+        The `field_key` must be defined in FIELD_MAPPING.
+        """
+        if field_key not in FIELD_MAPPING:
+            raise ValueError(f"Field key '{field_key}' is not defined in FIELD_MAPPING.")
+
+        selector, field_type = FIELD_MAPPING[field_key]
+        self.validate_and_fill_field(selector, value, field_type)
+
+    def fill_form_values(self, data: dict):
+        """
+        Fills all fields with the registration form from a dictionary.
+
+        Parameters:
+            data (dict): Key/value pairs where keys correspond to field names in FIELD_MAPPING.
+
+        Example:
+            data = {
+                "first_name": "John",
+                "last_name": "Doe",
+                "date_of_birth": "1990-01-01",
+                "email": "john.doe@example.com",
+                // etc.
+            }
+        """
+        for field_key, value in data.items():
+            self.fill_form_field(field_key, value)
+
+    def submit_form(self):
+        self.page.click(SUBMIT_BUTTON)
