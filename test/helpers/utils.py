@@ -14,7 +14,7 @@ def is_date_ddmmyyyy(value: str) -> bool:
     except ValueError:
         return False
 
-def is_male(name: str) -> str:
+def get_tittle(name: str) -> str:
     d = gender.Detector()
     result = d.get_gender(name)
 

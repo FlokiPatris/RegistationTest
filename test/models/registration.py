@@ -1,0 +1,18 @@
+class RegistrationField:
+    """
+    A class containing constants for registration form field keys.
+    """
+    TITLE_CODE = "title_code"
+    FIRST_NAME = "first_name"
+    LAST_NAME = "last_name"
+    DATE_OF_BIRTH = "date_of_birth"
+    EMAIL = "email"
+    POSTAL_CODE = "postal_code"
+    CITY = "city"
+    STREET = "street"
+    HOUSE_NUMBER = "house_number"
+    ADDRESS = "address"
+    PASSWORD = "password"
+    PASSWORD_REPEAT = "password_repeat"
+    MARKETING_CONSENT = "marketing_consent"
+    REGISTRATION_CONSENT = "registration_consent"
