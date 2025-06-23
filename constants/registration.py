@@ -1,0 +1,1 @@
+REGISTRATION_URL = "https://hartmanndirect.com/cs-cz/prihlaseni/registrace"
