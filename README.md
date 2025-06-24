@@ -1,7 +1,6 @@
 # RegistationTest
 
-This repository contains an end-to-end testing suite for a registration form, leveraging [Pytest](https://docs.pytest.org/) and [Playwright](https://playwright.dev/). 
-It implements the Page Object Model (POM) pattern so that tests remain clean and maintainable.
+This repository contains an end-to-end testing suite for a registration form, leveraging [Pytest](https://docs.pytest.org/) and [Playwright](https://playwright.dev/). <br> It implements the Page Object Model (POM) pattern so that tests remain clean and maintainable.
 
 ## Prerequisites
 
@@ -17,17 +16,15 @@ Before proceeding, ensure you have installed:
 
 Open a terminal and run:
 
-```bash
-git clone https://github.com/FlokiPatris/RegistationTest.git
+git clone https://github.com/FlokiPatris/RegistationTest.git <br>
 cd RegistationTest
 
 ### 2. Set Up a Virtual Environment (optional but recommended)
+
 python -m venv venv
 
-#### On Windows
-venv\Scripts\activate
-#### On macOS/Linux
-source venv/bin/activate
+On Windows: <br> venv\Scripts\activate <br> <br>
+On macOS/Linux: <br> source venv/bin/activate
 
 ### 3. Install Python Dependencies
 python -m pip install -r requirements.txt
