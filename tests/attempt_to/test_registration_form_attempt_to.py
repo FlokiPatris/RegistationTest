@@ -1,4 +1,4 @@
-from assertions.shared import get_alert_message
+from assertions.shared import wait_for_alert_text
 from pages.registration import RegistrationPage
 import pytest
 
@@ -70,7 +70,7 @@ def test_populate_registration_form_attempt_to(reg_page, form_data, expected_ale
     reg_page.populate_form_values(form_data)
     reg_page.submit_form()
 
-    actual_alert_text = get_alert_message(reg_page.page, expected_alert)
+    actual_alert_text = wait_for_alert_text(reg_page.page, expected_alert)
 
     assert expected_alert in actual_alert_text, (
         f"Expected alert '{expected_alert}' not found in '{actual_alert_text}'"

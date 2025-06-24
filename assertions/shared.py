@@ -1,4 +1,4 @@
-def get_alert_message(page, expected_alert):
+def wait_for_alert_text(page, expected_alert):
     """
     Wait for an alert containing the expected text to be visible and return its inner text.
 
