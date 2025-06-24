@@ -26,7 +26,7 @@ class RegistrationFields:
     LAST_NAME = FieldMapping(selector=f"{FORM_SELECTOR} #lastName", field_type=FieldTypes.STRING)
     DATE_OF_BIRTH = FieldMapping(
         selector=f"{FORM_SELECTOR} div.form-block.text-input-block.date-picker-wrapper input",
-        field_type=FieldTypes.DATE
+        field_type=FieldTypes.STRING
     )
     EMAIL = FieldMapping(selector=f"{FORM_SELECTOR} #email", field_type=FieldTypes.STRING)
     POSTAL_CODE = FieldMapping(selector=f"{FORM_SELECTOR} #postalCode", field_type=FieldTypes.NUMBER)

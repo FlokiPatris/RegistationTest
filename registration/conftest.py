@@ -8,6 +8,7 @@ def page():
         viewport: ViewportSize = {"width": 1920, "height": 1080}
         context = browser.new_context(viewport=viewport)
         page = context.new_page()
+        page.set_default_timeout(60000)
 
         yield page
 

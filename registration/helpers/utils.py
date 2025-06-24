@@ -1,18 +1,4 @@
 import gender_guesser.detector as gender
-from datetime import datetime
-
-def is_date_ddmmyyyy(value: str) -> bool:
-    """
-    Returns:
-        bool: True if the string is a valid date in 'DDMMYYYY' format, False otherwise.
-    """
-    if not isinstance(value, str):
-        return False
-    try:
-        datetime.strptime(value, "%d%m%Y")
-        return True
-    except ValueError:
-        return False
 
 def get_tittle(name: str) -> str:
     d = gender.Detector()
