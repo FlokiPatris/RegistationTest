@@ -1,8 +1,7 @@
-from test.constants.selectors.registration import SUBMIT_BUTTON
-from test.constants.urls.shared import Urls
-from test.constants.shared import WaitTimes, FieldTypes
-from test.helpers.utils import is_date_ddmmyyyy, get_tittle
-from test.models.registration import RegistrationField
+from registration.constants.urls.shared import Urls
+from registration.constants.shared import WaitTimes, FieldTypes
+from registration.helpers.utils import is_date_ddmmyyyy, get_tittle
+from registration.models.registration import RegistrationFields
 
 class RegistrationPage:
     def __init__(self, page):
@@ -18,11 +17,11 @@ class RegistrationPage:
         self.wait_until_loaded()
 
     def wait_until_loaded(self) -> None:
-        self.page.wait_for_selector(RegistrationField.FORM_SELECTOR, timeout=WaitTimes.LONG)
+        self.page.wait_for_selector(RegistrationFields.FORM_SELECTOR, timeout=WaitTimes.LONG)
 
     def validate_and_fill_field(self, selector: str, field_type: FieldTypes, value) -> None:
         if field_type == FieldTypes.STRING:
-            if selector.endswith("#firstName") and value:
+            if selector.endswith(RegistrationFields.FIRST_NAME.selector) and value:
                 # Special handling for the title case.
                 self.select_title_by_name(value)
             if not isinstance(value, str):
@@ -51,13 +50,13 @@ class RegistrationPage:
         Determine the appropriate title ('Pan', 'Paní') based on the provided name.
         """
         title = get_tittle(name)
-        title_selector = RegistrationField.TITLE_CODE.selector
+        title_selector = RegistrationFields.TITLE_CODE.selector
 
         self.page.click(title_selector)
         self.page.select_option(title_selector, title)
 
     def fill_form_field(self, field_key: str, value) -> None:
-        mapping = RegistrationField.get_all_fields().get(field_key)
+        mapping = RegistrationFields.get_all_fields().get(field_key)
         if not mapping:
             raise ValueError(f"Unknown field key: '{field_key}'")
 
@@ -72,4 +71,8 @@ class RegistrationPage:
             self.fill_form_field(field_key, value)
 
     def submit_form(self) -> None:
-        self.page.click(SUBMIT_BUTTON)
+        locator = self.page.get_by_role("button", name="Zaregistrovat se")
+        # Scroll the element into view using center alignment.
+        # The screen was going up and down when I was using self.page.get_by_role("button", name="Zaregistrovat se").click()
+        locator.evaluate("node => node.scrollIntoView({ block: 'center', inline: 'center' })")
+        locator.click()

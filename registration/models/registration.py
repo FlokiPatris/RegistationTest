@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from test.constants.shared import FieldTypes
+from registration.constants.shared import FieldTypes
 
 @dataclass
 class FieldMapping:
@@ -9,7 +9,7 @@ class FieldMapping:
 # Base form selector that scopes all fields.
 FORM_SELECTOR = "form#account-create"
 
-class RegistrationField:
+class RegistrationFields:
     """
     Encapsulates all registration form field mappings.
 
@@ -25,8 +25,7 @@ class RegistrationField:
     FIRST_NAME = FieldMapping(selector=f"{FORM_SELECTOR} #firstName", field_type=FieldTypes.STRING)
     LAST_NAME = FieldMapping(selector=f"{FORM_SELECTOR} #lastName", field_type=FieldTypes.STRING)
     DATE_OF_BIRTH = FieldMapping(
-        # Even though this might be an XPath, we include the parent scope consistently.
-        selector=f"{FORM_SELECTOR} //div[@class='form-block text-input-block date-picker-wrapper']//input",
+        selector=f"{FORM_SELECTOR} div.form-block.text-input-block.date-picker-wrapper input",
         field_type=FieldTypes.DATE
     )
     EMAIL = FieldMapping(selector=f"{FORM_SELECTOR} #email", field_type=FieldTypes.STRING)
