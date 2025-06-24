@@ -17,7 +17,7 @@ class RegistrationPage:
         self.wait_until_loaded()
 
     def wait_until_loaded(self) -> None:
-        self.page.wait_for_selector(RegistrationFields.FORM_SELECTOR, timeout=WaitTimes.LONG)
+        self.page.wait_for_selector(RegistrationFields.ROOT_SELECTOR, timeout=WaitTimes.LONG)
 
     def fill_form_fields(self, selector: str, field_type: FieldTypes, value) -> None:
         if field_type == FieldTypes.STRING:

@@ -1,4 +1,4 @@
-# RegistationTest
+# RegistrationTest
 
 This repository contains an end-to-end testing suite for a registration form, leveraging [Pytest](https://docs.pytest.org/) and [Playwright](https://playwright.dev/).
 
@@ -10,14 +10,14 @@ Before proceeding, ensure you have installed:
 - **Node.js** (required by Playwright)
 - **pip**
 
-## Instalation steps
+## Installation steps
 
 ### 1. Cloning the Repository
 
 Open a terminal and run:
 
-git clone https://github.com/FlokiPatris/RegistationTest.git <br>
-cd RegistationTest
+git clone https://github.com/FlokiPatris/RegistrationTest.git <br>
+cd RegistrationTest
 
 ### 2. Set Up a Virtual Environment (optional but recommended)
 
