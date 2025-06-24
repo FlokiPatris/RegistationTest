@@ -1,7 +1,7 @@
-from registration.constants.urls.shared import Urls
-from registration.constants.shared import WaitTimes, FieldTypes
-from registration.helpers.utils import get_tittle
-from registration.models.registration import RegistrationFields
+from constants.urls.shared import Urls
+from constants.shared import WaitTimes, FieldTypes
+from helpers.utils import get_tittle
+from models.registration import RegistrationFields
 
 class RegistrationPage:
     def __init__(self, page):

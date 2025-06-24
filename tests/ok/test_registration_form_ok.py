@@ -1,5 +1,5 @@
-from registration.assertions.shared import get_alert_message
-from registration.pages.registration import RegistrationPage
+from assertions.shared import get_alert_message
+from pages.registration import RegistrationPage
 from faker import Faker
 import pytest
 
@@ -30,11 +30,11 @@ registration_data_samples = [
     {**base_registration_data, "email": fake.email(), "marketing_consent": False},
     {**base_registration_data, "email": fake.email(), "last_name": "SomeVeryLongLastName"},
 ]
-successful_alert_message = "Potvrzení registrace"
+successful_alert_message = "Odeslali jsme vaše registrační údaje k ověření. Jakmile bude registrace potvrzena, budeme vás informovat zasláním e-mailu."
 
 #TODO- API returned Error: Request failed with status code 500 while waiting fot the page to load after clicking submit.
 @pytest.mark.parametrize("form_data", registration_data_samples)
-def test_populate_all_fields_all_consents(reg_page, form_data):
+def test_populate_registration_form_ok(reg_page, form_data):
     reg_page.populate_form_values(form_data)
     reg_page.submit_form()
 

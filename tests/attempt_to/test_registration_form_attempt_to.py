@@ -1,5 +1,5 @@
-from registration.assertions.shared import get_alert_message
-from registration.pages.registration import RegistrationPage
+from assertions.shared import get_alert_message
+from pages.registration import RegistrationPage
 import pytest
 
 @pytest.fixture
@@ -66,7 +66,7 @@ registration_data_samples = [
 
 
 @pytest.mark.parametrize("form_data, expected_alert", registration_data_samples)
-def test_populate_all_fields_all_consents(reg_page, form_data, expected_alert):
+def test_populate_registration_form_attempt_to(reg_page, form_data, expected_alert):
     reg_page.populate_form_values(form_data)
     reg_page.submit_form()
 

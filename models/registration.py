@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from registration.constants.shared import FieldTypes
+from constants.shared import FieldTypes
 
 @dataclass
 class FieldMapping:
