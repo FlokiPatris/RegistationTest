@@ -1,6 +1,6 @@
 # RegistationTest
 
-This repository contains an end-to-end testing suite for a registration form, leveraging [Pytest](https://docs.pytest.org/) and [Playwright](https://playwright.dev/). <br> It implements the Page Object Model (POM) pattern so that tests remain clean and maintainable.
+This repository contains an end-to-end testing suite for a registration form, leveraging [Pytest](https://docs.pytest.org/) and [Playwright](https://playwright.dev/).
 
 ## Prerequisites
 
